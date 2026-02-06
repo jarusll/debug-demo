@@ -6,7 +6,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
-  const calculateFactorialIterative = (num) => {
+  const factorialIterative = (num) => {
     let factorial = 1;
     for (let i = 2; i <= num; i++) {
       factorial *= i;
@@ -14,15 +14,15 @@ function App() {
     return factorial;
   };
 
-  const calculateFactorialRecursive = (num) => {
+  const factorialRecursive = (num) => {
     if (num === 0 || num === 1) return 1;
-    return num * calculateFactorialRecursive(num - 1);
+    return num * factorialRecursive(num - 1);
   };
 
-  const calculateFactorialServer = (number) => {
+  const factorialServer = (num) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(calculateFactorialIterative(number));
+        resolve(factorialIterative(num));
       }, Math.random() * 2000);
     });
   };
@@ -33,7 +33,7 @@ function App() {
       setResult('Please enter a valid non-negative number.');
       return;
     }
-    setResult(calculateFactorialIterative(num));
+    setResult(factorialIterative(num));
   };
 
   const handleRecursiveFactorial = () => {
@@ -42,7 +42,7 @@ function App() {
       setResult('Please enter a valid non-negative number.');
       return;
     }
-    setResult(calculateFactorialRecursive(num));
+    setResult(factorialRecursive(num));
   };
 
   const handleServerFactorial = () => {
@@ -52,7 +52,7 @@ function App() {
       return;
     }
     setIsPending(true);
-    calculateFactorialServer(number).then((response) => {
+    factorialServer(number).then((response) => {
       setResult(response);
     }).catch(() => {
       setResult('Error calculating factorial on server.');
@@ -61,17 +61,16 @@ function App() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setResult(null);
-  };
-
   const handleInput = (e) => {
     setInput(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
       <h1>Factorial Calculator</h1>
       <form onSubmit={handleSubmit}>
         <input
