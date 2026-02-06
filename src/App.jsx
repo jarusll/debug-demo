@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import './App.css';
 
-function App() {
+export default function App() {
   const [input, setInput] = useState('');
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState('-');
   const [isPending, setIsPending] = useState(false);
 
   const factorialIterative = (num) => {
@@ -65,14 +65,10 @@ function App() {
     setInput(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <h1>Factorial Calculator</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Factorial Debug Demo</h1>
+      <form>
         <input
           type="number"
           value={input}
@@ -81,9 +77,9 @@ function App() {
           style={{ marginBottom: '20px', padding: '10px', fontSize: '16px', textAlign: 'center' }}
         />
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button type="button" onClick={handleIterativeFactorial}>Factorial (Iterative)</button>
-          <button type="button" onClick={handleRecursiveFactorial}>Factorial (Recursive)</button>
-          <button type="button" onClick={handleServerFactorial}>Factorial (Server)</button>
+          <button type="button" onClick={handleIterativeFactorial}>Iterative</button>
+          <button type="button" onClick={handleRecursiveFactorial}>Recursive</button>
+          <button type="button" onClick={handleServerFactorial}>Server</button>
         </div>
       </form>
       <div style={{ opacity: isPending ? 0.2 : 1 }}>
@@ -93,4 +89,4 @@ function App() {
   );
 }
 
-export default App;
+export const NamedExport = "any js thing"
