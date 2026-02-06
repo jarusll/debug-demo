@@ -61,6 +61,21 @@ export default function App() {
     });
   };
 
+  const handleServerCaught = async () => {
+    setIsPending(true);
+    try {
+      throw new Error("Handled - Cannot reach server")
+    } catch (err) {
+      setResult(`${err.message || err.toString()}`);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const handleServerUncaught = async () => {
+    throw new Error("Unhandled rejection")
+  };
+
   const handleInput = (e) => {
     setInput(e.target.value);
   };
@@ -76,10 +91,18 @@ export default function App() {
           placeholder="Enter a number"
           style={{ marginBottom: '20px', padding: '10px', fontSize: '16px', textAlign: 'center' }}
         />
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button type="button" onClick={handleIterativeFactorial}>Iterative</button>
-          <button type="button" onClick={handleRecursiveFactorial}>Recursive</button>
-          <button type="button" onClick={handleServerFactorial}>Server</button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button type="button" onClick={handleIterativeFactorial}>Iterative</button>
+            <button type="button" onClick={handleRecursiveFactorial}>Recursive</button>
+          </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button type="button" onClick={handleServerFactorial}>Server</button>
+          </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button type="button" onClick={handleServerCaught}>Server with caught exception</button>
+            <button type="button" onClick={handleServerUncaught}>Server with uncaught exception</button>
+          </div>
         </div>
       </form>
       <div style={{ opacity: isPending ? 0.2 : 1 }}>

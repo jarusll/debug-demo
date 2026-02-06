@@ -15,5 +15,8 @@ export default defineConfig({
   esbuild: {
     keepNames: true,
     target: 'esnext',
+  },
+  server: {
+    hmr: { overlay: false }
   }
 })
