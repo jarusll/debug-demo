@@ -82,7 +82,7 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <h1>Factorial Debug Demo</h1>
+      <h1>Factorial Debug</h1>
       <form>
         <input
           type="number"
