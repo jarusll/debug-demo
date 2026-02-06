@@ -5,9 +5,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [
     react({
-      babel: {
-        plugins: [['babel-plugin-react-compiler']],
-      },
+      babel: false
     }),
   ],
+  build: {
+    minify: false,
+    target: 'esnext',
+  },
+  esbuild: {
+    keepNames: true,
+    target: 'esnext',
+  }
 })
