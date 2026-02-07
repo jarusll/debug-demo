@@ -6,46 +6,46 @@ export default function App() {
   const [result, setResult] = useState('-');
   const [isPending, setIsPending] = useState(false);
 
-  const factorialIterative = (num) => {
+  function factorialIterative(num) {
     let factorial = 1;
     for (let i = 2; i <= num; i++) {
       factorial *= i;
     }
     return factorial;
-  };
+  }
 
-  const factorialRecursive = (num) => {
+  function factorialRecursive(num) {
     if (num === 0 || num === 1) return 1;
     return num * factorialRecursive(num - 1);
-  };
+  }
 
-  const factorialServer = (num) => {
+  function factorialServer(num) {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(factorialIterative(num));
       }, Math.random() * 2000);
     });
-  };
+  }
 
-  const handleIterativeFactorial = () => {
+  function handleIterativeFactorial() {
     const num = parseInt(input, 10);
     if (isNaN(num) || num < 0) {
       setResult('Please enter a valid non-negative number.');
       return;
     }
     setResult(factorialIterative(num));
-  };
+  }
 
-  const handleRecursiveFactorial = () => {
+  function handleRecursiveFactorial() {
     const num = parseInt(input, 10);
     if (isNaN(num) || num < 0) {
       setResult('Please enter a valid non-negative number.');
       return;
     }
     setResult(factorialRecursive(num));
-  };
+  }
 
-  const handleServerFactorial = () => {
+  function handleServerFactorial() {
     const number = parseInt(input, 10);
     if (isNaN(number) || number < 0) {
       setResult('Please enter a valid non-negative number.');
@@ -59,9 +59,9 @@ export default function App() {
     }).finally(() => {
       setIsPending(false);
     });
-  };
+  }
 
-  const handleServerCaught = async () => {
+  async function handleServerCaught() {
     setIsPending(true);
     try {
       throw new Error("Handled - Cannot reach server")
@@ -70,15 +70,32 @@ export default function App() {
     } finally {
       setIsPending(false);
     }
-  };
+  }
 
-  const handleServerUncaught = async () => {
+  async function handleServerUncaught() {
     throw new Error("Unhandled rejection")
-  };
+  }
 
-  const handleInput = (e) => {
+  function handleInput(e) {
     setInput(e.target.value);
-  };
+  }
+
+  async function handleTypicodeRequest() {
+    setIsPending(true);
+    try {
+      const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+      const data = await response.json();
+      setResult(`Typicode: ${data.title || 'No title found'}`);
+    } catch (e) {
+      e; // thank you linter
+      setResult('Error fetching Typicode data.');
+    } finally {
+      setIsPending(false);
+    }
+  }
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -104,6 +121,8 @@ export default function App() {
             <button type="button" onClick={handleServerUncaught}>Server with uncaught exception</button>
           </div>
         </div>
+        <hr style={{ margin: '20px 0', width: '100%' }} />
+        <button type="button" onClick={handleTypicodeRequest}>Make typcode request</button>
       </form>
       <div style={{ opacity: isPending ? 0.2 : 1 }}>
         <h2>Result: {result}</h2>
