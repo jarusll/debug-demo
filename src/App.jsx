@@ -122,7 +122,7 @@ export default function App() {
           </div>
         </div>
         <hr style={{ margin: '20px 0', width: '100%' }} />
-        <button type="button" onClick={handleTypicodeRequest}>Make typcode request</button>
+        <button type="button" onClick={handleTypicodeRequest}>Make typicode request</button>
       </form>
       <div style={{ opacity: isPending ? 0.2 : 1 }}>
         <h2>Result: {result}</h2>
